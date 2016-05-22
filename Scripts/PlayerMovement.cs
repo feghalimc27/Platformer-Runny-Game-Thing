@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public float speed;
     public float jumpPower;
+    public string weaponProc;
 
     private Vector2 speedV;
     private Vector2 movement;
@@ -36,12 +37,23 @@ public class PlayerMovement : MonoBehaviour {
         );
 
         // check if grounded
-        if(rigid.velocity.y == 0) { grounded = true; } else { grounded = false; }
-
-        if(Input.GetButtonDown("Fire1")) {
-            attacking = true;
+        if(rigid.velocity.y == 0) {
+            grounded = true;
+        } else {
+            grounded = false;
         }
-	}
+
+        bool proc = Input.GetButtonDown(weaponProc);
+
+        if (proc)
+        {
+            WeaponSpawn weapon = GetComponent<WeaponSpawn>();
+            if (weapon != null)
+            {
+                weapon.Attack(false); // false because the player is not an enemy
+            }
+        }
+    }
     
     void FixedUpdate() {
         rigid.velocity = movement;
