@@ -22,8 +22,9 @@ public class Health : MonoBehaviour {
         if (shot != null){ //Check for shot to be a real game object and not a ghost object
             if (shot.isEnemyWeapon != isEnemy){ //Checks for friendly fire. Only applies when enemies
                 Damage(shot.damage);
-
-                Destroy(shot.gameObject); //Destroys the projectile on impact
+                if (shot.weapon){
+                    Destroy(shot.gameObject); //Destroys the projectile on impact
+                }
             }
         }
     }

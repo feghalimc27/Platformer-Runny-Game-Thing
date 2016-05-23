@@ -9,8 +9,14 @@ public class pWeapon : MonoBehaviour {
 
     public bool isEnemyWeapon = false; //checks for player or enemy origin
 
+    public bool despawn = true; //check to see if this object should despawn after a certain time.
+
+    public bool weapon = false; //checks to see if the object is a weapon or a character/trap. 
+
     void Start()
     {
-        Destroy(gameObject, despawnTime);
+        if (despawn){
+            Destroy(gameObject, despawnTime);
+        }
     }
 }

@@ -11,6 +11,9 @@ public class WeaponSpawn : MonoBehaviour {
 
     public float procRate = 0.25f; //Cooldown before another shot can be fired
 
+    public string player = "";
+    private GameObject eTarget;
+
     //--------------------------------
     // 2 - Cooldown
     //--------------------------------
@@ -20,6 +23,7 @@ public class WeaponSpawn : MonoBehaviour {
     void Start()
     {
         procCooldown = 0f;
+        eTarget = GameObject.Find(player);
     }
 
     void Update()
@@ -48,16 +52,22 @@ public class WeaponSpawn : MonoBehaviour {
 
             // The is enemy property
             pWeapon proc = weaponTransform.gameObject.GetComponent<pWeapon>();
-            if (proc != null)
-            {
+            if (proc != null) {
                 proc.isEnemyWeapon = isEnemy;
             }
 
-            // Make the weapon shot always towards it
+            // Make the weapon shot always towards target
 			ProjMovement move = weaponTransform.gameObject.GetComponent<ProjMovement>();
-            if (move != null)
-            {
-                move.direction = this.transform.right; // towards in 2D space is the right of the sprite (CHANGE THIS TO THE DIRECTION THE PLAYER FACES)
+            if (isEnemy) {
+                if ((eTarget.transform.position.x - transform.position.x) < 0){
+                    move.direction = -this.transform.right;
+                }else{
+                    move.direction = this.transform.right;
+                }
+            }else{
+                if (move != null){
+                    move.direction = this.transform.right; // towards in 2D space is the right of the sprite (CHANGE THIS TO THE DIRECTION THE PLAYER FACES)
+                }
             }
         }
     }

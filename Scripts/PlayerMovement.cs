@@ -23,9 +23,15 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+    }
+    
+    void FixedUpdate() {
+        rigid.velocity = movement;
+
         float h = Input.GetAxis("Horizontal");
-        
-        if(Input.GetButtonDown("Jump") && grounded) {
+
+        if (Input.GetButtonDown("Jump") && grounded)
+        {
             rigid.AddForce(new Vector2(0, jumpPower));
             jump = true;
             grounded = false;
@@ -37,9 +43,12 @@ public class PlayerMovement : MonoBehaviour {
         );
 
         // check if grounded
-        if(rigid.velocity.y == 0) {
+        if (rigid.velocity.y <= 1.0)
+        {
             grounded = true;
-        } else {
+        }
+        else
+        {
             grounded = false;
         }
 
@@ -53,10 +62,6 @@ public class PlayerMovement : MonoBehaviour {
                 weapon.Attack(false); // false because the player is not an enemy
             }
         }
-    }
-    
-    void FixedUpdate() {
-        rigid.velocity = movement;
     }
 
     public bool getGrounded() {
